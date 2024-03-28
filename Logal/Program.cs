@@ -48,6 +48,14 @@ builder.Services.AddScoped(b => new MongoClient(builder.Configuration["MongoDb:u
 builder.Services.AddScoped<JwtManager>();
 builder.Services.AddScoped<JwtSecurityTokenHandler>();
 
+builder.Services.AddCors(b => b.AddDefaultPolicy(o =>
+{
+    o.AllowAnyMethod();
+    o.AllowAnyHeader();
+    o.AllowCredentials();
+    o.WithOrigins("http://localhost:5173");
+}));
+
 // builder.Services.AddSession();
 
 
@@ -74,6 +82,8 @@ if (app.Environment.IsDevelopment())
 }
 
 // app.UseSession();
+
+app.UseCors();
 
 app.UseAuthentication();
 
