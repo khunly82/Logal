@@ -8,7 +8,7 @@ namespace Logal.Hubs
 
         public void Send(MessageForm form)
         {
-            Clients.Group(form.Group).SendAsync("newMessage", form.Message);
+            Clients.Others.SendAsync("newMessage", form.Message);
         }
     }
 }
