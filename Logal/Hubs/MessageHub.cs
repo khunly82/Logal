@@ -1,5 +1,4 @@
 ﻿using Logal.Forms;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using MongoDB.Bson;
 using MongoDB.Driver;

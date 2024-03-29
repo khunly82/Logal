@@ -5,9 +5,11 @@ using Logal.Hubs;
 using Logal.Infrastructures;
 using Logal.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
+using SelectPdf;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Mail;
@@ -56,6 +58,9 @@ builder.Services.AddCors(b => b.AddDefaultPolicy(o =>
     o.AllowCredentials();
     o.WithOrigins("http://localhost:5174");
 }));
+
+builder.Services.AddScoped<HtmlRenderer>();
+builder.Services.AddScoped<HtmlToPdf>();
 
 // builder.Services.AddSession();
 
