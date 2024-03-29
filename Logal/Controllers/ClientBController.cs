@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 using System.Security.Claims;
 
 namespace Logal.Controllers
@@ -9,6 +10,9 @@ namespace Logal.Controllers
     [Authorize(Roles = "logalMovies2")]
     public class ClientBController: CommonController
     {
+        public ClientBController(MongoClient mongoClient) : base(mongoClient)
+        {
+        }
 
         [HttpGet("Method3")]
         public IActionResult Method3()

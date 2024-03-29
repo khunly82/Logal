@@ -1,5 +1,6 @@
 ﻿using Logal.Validators;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Logal.Forms
 {
@@ -17,7 +18,7 @@ namespace Logal.Forms
         [ContentType("image/jpeg", "image/png")]
         public IFormFile Attachment { get; set; } = null!;
 
-        public DateTime StartDate { get; set; }
+        public virtual DateTime StartDate { get; set; }
 
         [After("StartDate")]
         public DateTime EndDate { get; set; }

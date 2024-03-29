@@ -11,6 +11,7 @@ using MongoDB.Driver;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,7 +54,7 @@ builder.Services.AddCors(b => b.AddDefaultPolicy(o =>
     o.AllowAnyMethod();
     o.AllowAnyHeader();
     o.AllowCredentials();
-    o.WithOrigins("http://localhost:5173");
+    o.WithOrigins("http://localhost:5174");
 }));
 
 // builder.Services.AddSession();
@@ -86,6 +87,28 @@ if (app.Environment.IsDevelopment())
 app.UseCors();
 
 app.UseAuthentication();
+
+app.Use((context, next) =>
+{
+    // access_token
+    string? token = context.Request.Query["access_token"];
+
+    if(token != null)
+    {
+        ClaimsPrincipal claims = new JwtSecurityTokenHandler().ValidateToken(token, new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ldjfghjkdfghdjlfkfqsdqsjfsmdjkgfmdskgjf"))
+        }, out SecurityToken st);
+
+        context.User = claims;
+    }
+
+    return next();
+});
 
 app.UseAuthorization();
 
